@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from .models import Libro
+from .models import Libro, ESTADOS_LIBRO
 from . import db
 
 libros_bp = Blueprint('libros', __name__)
@@ -17,9 +17,9 @@ def obtener_libro(id):
 @libros_bp.route('/libros', methods=['POST'])
 def crear_libro():
     data = request.get_json()
-    errores = validar_libro(data)
-    if errores:
-        return jsonify({'error': errores}), 400
+    error_estado = validar_libro(data)
+    if error_estado:
+        return jsonify({'error': error_estado}), 403
 
     nuevo_libro = Libro(
         titulo=data['titulo'],
@@ -37,9 +37,9 @@ def actualizar_libro(id):
     libro = Libro.query.get_or_404(id)
     data = request.get_json()
 
-    errores = validar_libro(data, update=True)
-    if errores:
-        return jsonify({'error': errores}), 400
+    error_estado = validar_libro(data)
+    if error_estado:
+        return jsonify({'error': error_estado}), 403
 
     libro.titulo = data.get('titulo', libro.titulo)
     libro.autor = data.get('autor', libro.autor)
@@ -65,12 +65,17 @@ def buscar_libros():
 
     query = Libro.query
     if titulo:
-        query = query.filter
+        query = query.filter(Libro.titulo.ilike(f'%{titulo}%'))
+    if autor:
+        query = query.filter(Libro.autor.ilike(f'%{autor}%'))
+    if categoria:
+        query = query.filter(Libro.categoria.ilike(f'%{categoria}%'))
 
-def validar_libro(data, update=False):
-    errores = []
-    campos_obligatorios = ['titulo', 'autor', 'isbn', 'categoria']
-    for campo in campos_obligatorios:
-        if not update and campo not in data:
-            errores.append(f'El campo "{campo}" es obligatorio')
-    return errores
+    libros = query.all()
+    return jsonify([libro.to_dict() for libro in libros])
+
+def validar_libro(data):
+    estado = data.get('estado', 'disponible')
+    if estado not in ESTADOS_LIBRO:
+        return f'Estado inválido: "{estado}". Debe ser uno de {ESTADOS_LIBRO}'
+    return None

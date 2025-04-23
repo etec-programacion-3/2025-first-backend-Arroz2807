@@ -1,6 +1,8 @@
 from . import db
 from datetime import datetime
 
+ESTADOS_LIBRO = ['disponible', 'prestado', 'no devuelto', 'roto']
+
 class Libro(db.Model):
     __tablename__ = 'libros'
 
