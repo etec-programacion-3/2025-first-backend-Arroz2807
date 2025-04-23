@@ -11,3 +11,15 @@ class Libro(db.Model):
     categoria = db.Column(db.String(100), nullable=False)
     estado = db.Column(db.String(50), default="disponible")
     fecha_creacion = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'titulo': self.titulo,
+            'autor': self.autor,
+            'isbn': self.isbn,
+            'categoria': self.categoria,
+            'estado': self.estado,
+            'fecha_creacion': self.fecha_creacion.isoformat()
+        }
+

@@ -15,4 +15,7 @@ def create_app():
 
     from .models import Libro  # Importar modelo para el registro con migrate
 
+    from .routes import libros_bp
+    app.register_blueprint(libros_bp)
+
     return app
