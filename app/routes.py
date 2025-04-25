@@ -9,6 +9,25 @@ def obtener_libros():
     libros = Libro.query.all()
     return jsonify([libro.to_dict() for libro in libros])
 
+@libros_bp.route('/libros/buscar', methods=['GET'])
+def buscar_libros():
+    titulo = request.args.get('titulo')
+    autor = request.args.get('autor')
+    categoria = request.args.get('categoria')
+
+    query = Libro.query
+
+    if titulo:
+        query = query.filter(Libro.titulo.ilike(f'%{titulo}%'))
+    if autor:
+        query = query.filter(Libro.autor.ilike(f'%{autor}%'))
+    if categoria:
+        query = query.filter(Libro.categoria.ilike(f'%{categoria}%'))
+
+    libros = query.all()
+
+    return jsonify([libro.to_dict() for libro in libros])
+
 @libros_bp.route('/libros/<int:id>', methods=['GET'])
 def obtener_libro(id):
     libro = Libro.query.get_or_404(id)
@@ -56,16 +75,6 @@ def eliminar_libro(id):
     db.session.delete(libro)
     db.session.commit()
     return jsonify({'mensaje': 'Libro eliminado correctamente'})
-
-@libros_bp.route('/libros/buscar', methods=['GET'])
-def buscar_libros():
-    titulo = request.args.get('titulo')
-    autor = request.args.get('autor')
-    categoria = request.args.get('categoria')
-
-    query = Libro.query
-    if titulo:
-        query = query.filter
 
 def validar_libro(data, update=False):
     errores = []

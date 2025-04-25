@@ -16,6 +16,19 @@ GET http://127.0.0.1:5000/libros
 ### Buscar por título
 GET http://127.0.0.1:5000/libros/buscar?titulo=principito
 
+### Buscar por autor
+GET http://127.0.0.1:5000/libros/buscar?autor=exupéry
+
+### Buscar por categoría
+GET http://127.0.0.1:5000/libros/buscar?categoria=ficción
+
+### Buscar por título y autor
+GET http://127.0.0.1:5000/libros/buscar?titulo=principito&autor=exupéry
+
+### Buscar por categoría y autor
+GET http://127.0.0.1:5000/libros/buscar?categoria=ficción&autor=exupéry
+
+
 ### Obtener libro por ID
 GET http://127.0.0.1:5000/libros/1
 
