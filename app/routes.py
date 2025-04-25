@@ -14,9 +14,14 @@ def buscar_libros():
     titulo = request.args.get('titulo')
     autor = request.args.get('autor')
     categoria = request.args.get('categoria')
+    ordenar_por = request.args.get('ordenar_por', 'id')  # campo por defecto
+    orden = request.args.get('orden', 'asc')             # ascendente por defecto
+    page = request.args.get('page', 1, type=int)
+    limit = request.args.get('limit', 10, type=int)
 
     query = Libro.query
 
+    # Búsqueda
     if titulo:
         query = query.filter(Libro.titulo.ilike(f'%{titulo}%'))
     if autor:
@@ -24,9 +29,25 @@ def buscar_libros():
     if categoria:
         query = query.filter(Libro.categoria.ilike(f'%{categoria}%'))
 
-    libros = query.all()
+    # Ordenamiento dinámico
+    if hasattr(Libro, ordenar_por):
+        campo = getattr(Libro, ordenar_por)
+        if orden == 'desc':
+            campo = campo.desc()
+        else:
+            campo = campo.asc()
+        query = query.order_by(campo)
 
-    return jsonify([libro.to_dict() for libro in libros])
+    # Paginación
+    libros_paginados = query.paginate(page=page, per_page=limit, error_out=False)
+    libros = [libro.to_dict() for libro in libros_paginados.items]
+
+    return jsonify({
+        'libros': libros,
+        'pagina_actual': page,
+        'total_paginas': libros_paginados.pages,
+        'total_libros': libros_paginados.total
+    })
 
 @libros_bp.route('/libros/<int:id>', methods=['GET'])
 def obtener_libro(id):
