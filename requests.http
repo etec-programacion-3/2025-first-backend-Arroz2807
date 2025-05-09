@@ -1,4 +1,4 @@
-### Crear un libro
+### Crear un libro nuevo en la base de datos
 POST http://127.0.0.1:5000/libros
 Content-Type: application/json
 
@@ -7,32 +7,43 @@ Content-Type: application/json
   "autor": "Antoine de Saint-Exupéry",
   "isbn": "9789876420845",
   "categoria": "Ficción",
-  "estado": "disponible"
+  "estado": "disponible"  // Estado debe estar dentro de los permitidos
 }
 
-### Obtener todos los libros
+### Obtener la lista completa de libros registrados
 GET http://127.0.0.1:5000/libros
 
-### Buscar por título
+### Buscar libros por título (filtra aquellos cuyo título contenga "principito")
 GET http://127.0.0.1:5000/libros/buscar?titulo=principito
 
-### Buscar por autor
+### Buscar libros por autor (filtra por coincidencias con el nombre del autor)
 GET http://127.0.0.1:5000/libros/buscar?autor=exupéry
 
-### Buscar por categoría
+### Buscar libros por categoría (ejemplo: "Ficción")
 GET http://127.0.0.1:5000/libros/buscar?categoria=ficción
 
-### Buscar por título y autor
+### Buscar libros por título y autor al mismo tiempo
 GET http://127.0.0.1:5000/libros/buscar?titulo=principito&autor=exupéry
 
-### Buscar por categoría y autor
+### Buscar libros por categoría y autor combinados
 GET http://127.0.0.1:5000/libros/buscar?categoria=ficción&autor=exupéry
 
+### Buscar libros ordenados por título ascendente
+GET http://127.0.0.1:5000/libros/buscar?ordenar_por=titulo&orden=asc
 
-### Obtener libro por ID
+### Buscar libros ordenados por ID descendente
+GET http://127.0.0.1:5000/libros/buscar?ordenar_por=id&orden=desc
+
+### Buscar libros por autor con paginación (página 2, 5 libros por página)
+GET http://127.0.0.1:5000/libros/buscar?autor=exupéry&page=2&limit=5
+
+### Buscar libros con paginación sin filtros (primera página, 3 libros por página)
+GET http://127.0.0.1:5000/libros/buscar?page=1&limit=3
+
+### Obtener un libro específico por su ID (en este caso, ID 1)
 GET http://127.0.0.1:5000/libros/1
 
-### Actualizar un libro
+### Actualizar un libro (por ID) – solo modificamos el título
 PUT http://127.0.0.1:5000/libros/1
 Content-Type: application/json
 
@@ -40,5 +51,5 @@ Content-Type: application/json
   "titulo": "El Principito (edición especial)"
 }
 
-### Eliminar un libro
+### Eliminar un libro específico por ID (en este ejemplo, ID 1)
 DELETE http://127.0.0.1:5000/libros/1
