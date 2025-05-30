@@ -1,5 +1,7 @@
+@baseUrl = http://127.0.0.1:5000/libros
+
 ### Crear un libro nuevo en la base de datos
-POST http://127.0.0.1:5000/libros
+POST {{baseUrl}}
 Content-Type: application/json
 
 {
@@ -11,40 +13,40 @@ Content-Type: application/json
 }
 
 ### Obtener la lista completa de libros registrados
-GET http://127.0.0.1:5000/libros
+GET {{baseUrl}}
 
 ### Buscar libros por título (filtra aquellos cuyo título contenga "principito")
-GET http://127.0.0.1:5000/libros/buscar?titulo=principito
+GET {{baseUrl}}/buscar?titulo=principito
 
 ### Buscar libros por autor (filtra por coincidencias con el nombre del autor)
-GET http://127.0.0.1:5000/libros/buscar?autor=exupéry
+GET {{baseUrl}}/buscar?autor=exupéry
 
 ### Buscar libros por categoría (ejemplo: "Ficción")
-GET http://127.0.0.1:5000/libros/buscar?categoria=ficción
+GET {{baseUrl}}/buscar?categoria=ficción
 
 ### Buscar libros por título y autor al mismo tiempo
-GET http://127.0.0.1:5000/libros/buscar?titulo=principito&autor=exupéry
+GET {{baseUrl}}/buscar?titulo=principito&autor=exupéry
 
 ### Buscar libros por categoría y autor combinados
-GET http://127.0.0.1:5000/libros/buscar?categoria=ficción&autor=exupéry
+GET {{baseUrl}}/buscar?categoria=ficción&autor=exupéry
 
 ### Buscar libros ordenados por título ascendente
-GET http://127.0.0.1:5000/libros/buscar?ordenar_por=titulo&orden=asc
+GET {{baseUrl}}/buscar?ordenar_por=titulo&orden=asc
 
 ### Buscar libros ordenados por ID descendente
-GET http://127.0.0.1:5000/libros/buscar?ordenar_por=id&orden=desc
+GET {{baseUrl}}/buscar?ordenar_por=id&orden=desc
 
 ### Buscar libros por autor con paginación (página 2, 5 libros por página)
-GET http://127.0.0.1:5000/libros/buscar?autor=exupéry&page=2&limit=5
+GET {{baseUrl}}/buscar?autor=exupéry&page=2&limit=5
 
 ### Buscar libros con paginación sin filtros (primera página, 3 libros por página)
-GET http://127.0.0.1:5000/libros/buscar?page=1&limit=3
+GET {{baseUrl}}/buscar?page=1&limit=3
 
 ### Obtener un libro específico por su ID (en este caso, ID 1)
-GET http://127.0.0.1:5000/libros/1
+GET {{baseUrl}}/1
 
 ### Actualizar un libro (por ID) – solo modificamos el título
-PUT http://127.0.0.1:5000/libros/1
+PUT {{baseUrl}}/1
 Content-Type: application/json
 
 {
@@ -52,4 +54,4 @@ Content-Type: application/json
 }
 
 ### Eliminar un libro específico por ID (en este ejemplo, ID 1)
-DELETE http://127.0.0.1:5000/libros/1
+DELETE {{baseUrl}}/1
