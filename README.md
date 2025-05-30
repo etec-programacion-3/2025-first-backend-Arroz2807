@@ -5,6 +5,10 @@
 - Curso: 5to Año
 - Especialidad: Informática
 
+## Instrucciones
+1. Para descargar las dependencias, ejecutar el comando "pip install requirements.txt"
+2. Para levantar el backend, ejecutar "python3 run.py"
+
 ## Configuración del Repositorio
 - La rama `main` debe estar protegida
 - No se permiten push directos a `main`
