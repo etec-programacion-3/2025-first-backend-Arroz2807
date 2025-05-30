@@ -2,6 +2,7 @@ from flask import Flask                      # Crea la app Flask
 from flask_sqlalchemy import SQLAlchemy      # ORM para manejar la base de datos relacional (SQLAlchemy)
 from flask_migrate import Migrate            # Permite crear y aplicar migraciones de base de datos (Flask-Migrate)
 from config import Config                    # Importa la configuración desde config.py
+from flask_cors import CORS
 
 # Instancias globales
 db = SQLAlchemy()     # Instancia global del ORM SQLAlchemy (se usa en modelos y para interactuar con la DB)
@@ -15,6 +16,9 @@ migrate = Migrate()   # Instancia global del gestor de migraciones (Flask-Migrat
 def create_app():
     app = Flask(__name__)                   # Crea la instancia de la aplicación Flask
     app.config.from_object(Config)          # Carga configuración (como la URI de la base de datos)
+
+    # Habilitar CORS para todos los endpoints
+    CORS(app)
 
     db.init_app(app)                        # Inicializa SQLAlchemy con la app (vincula ORM con Flask)
     migrate.init_app(app, db)               # Inicializa Flask-Migrate (conecta app + ORM para usar migraciones)
