@@ -1,9 +1,13 @@
 # Proyecto Backend - Sistema de Gestión de Biblioteca
 
 ## Información del Alumno
-- Nombre y Apellido: Nicolas Manescau}
+- Nombre y Apellido: Nicolas Manescau
 - Curso: 5to Año
 - Especialidad: Informática
+
+## Instrucciones
+1. Para descargar las dependencias, ejecutar el comando "pip install -r requirements.txt"
+2. Para levantar el backend, ejecutar "python3 run.py"
 
 ## Configuración del Repositorio
 - La rama `main` debe estar protegida

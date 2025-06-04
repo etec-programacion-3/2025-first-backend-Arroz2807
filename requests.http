@@ -1,5 +1,7 @@
-### Crear un libro
-POST http://127.0.0.1:5000/libros
+@baseUrl = http://127.0.0.1:5000/libros
+
+### Crear un libro nuevo en la base de datos
+POST {{baseUrl}}
 Content-Type: application/json
 
 {
@@ -7,25 +9,49 @@ Content-Type: application/json
   "autor": "Antoine de Saint-Exupéry",
   "isbn": "9789876420845",
   "categoria": "Ficción",
-  "estado": "disponible"
+  "estado": "disponible"  // Estado debe estar dentro de los permitidos
 }
 
-### Obtener todos los libros
-GET http://127.0.0.1:5000/libros
+### Obtener la lista completa de libros registrados
+GET {{baseUrl}}
 
-### Buscar por título
-GET http://127.0.0.1:5000/libros/buscar?titulo=principito
+### Buscar libros por título (filtra aquellos cuyo título contenga "principito")
+GET {{baseUrl}}/buscar?titulo=principito
 
-### Obtener libro por ID
-GET http://127.0.0.1:5000/libros/1
+### Buscar libros por autor (filtra por coincidencias con el nombre del autor)
+GET {{baseUrl}}/buscar?autor=exupéry
 
-### Actualizar un libro
-PUT http://127.0.0.1:5000/libros/1
+### Buscar libros por categoría (ejemplo: "Ficción")
+GET {{baseUrl}}/buscar?categoria=ficción
+
+### Buscar libros por título y autor al mismo tiempo
+GET {{baseUrl}}/buscar?titulo=principito&autor=exupéry
+
+### Buscar libros por categoría y autor combinados
+GET {{baseUrl}}/buscar?categoria=ficción&autor=exupéry
+
+### Buscar libros ordenados por título ascendente
+GET {{baseUrl}}/buscar?ordenar_por=titulo&orden=asc
+
+### Buscar libros ordenados por ID descendente
+GET {{baseUrl}}/buscar?ordenar_por=id&orden=desc
+
+### Buscar libros por autor con paginación (página 2, 5 libros por página)
+GET {{baseUrl}}/buscar?autor=exupéry&page=2&limit=5
+
+### Buscar libros con paginación sin filtros (primera página, 3 libros por página)
+GET {{baseUrl}}/buscar?page=1&limit=3
+
+### Obtener un libro específico por su ID (en este caso, ID 1)
+GET {{baseUrl}}/1
+
+### Actualizar un libro (por ID) – solo modificamos el título
+PUT {{baseUrl}}/1
 Content-Type: application/json
 
 {
   "titulo": "El Principito (edición especial)"
 }
 
-### Eliminar un libro
-DELETE http://127.0.0.1:5000/libros/1
+### Eliminar un libro específico por ID (en este ejemplo, ID 1)
+DELETE {{baseUrl}}/1
